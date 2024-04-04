@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person{
+  id String @id @unique @default(uuid())
+  name String @db.VarChar(80)
+  email String @unique @db.VarChar(45)
+  password String @db.VarChar(120)
+  sex Sex
+  birthDate String @db.VarChar(30)
+  civilState CivilState
+  admin Boolean @default(false)
+  addresses Address[]
+  @@map("people")
+}
+
+model Address{
+    id String @id @unique @default(uuid())
+    zipCode String @db.VarChar(8)
+    address  String @unique @db.VarChar(200)
+    number Int
+    complement String @db.VarChar(40)
+    neighborhood String @db.VarChar(20)
+    state String @db.VarChar(2)
+    city String @db.VarChar(50)
+    person Person @relation(fields: [person_id],references: [id],onDelete: Cascade)
+    person_id String
+    @@map("addresses")
+
+}
+
+enum Sex{
+  Male
+  Female
+  Other
+}
+
+enum CivilState{
+  Married
+  Single
+  Divorced
+  Widower
+}
