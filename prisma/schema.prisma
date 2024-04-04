@@ -35,8 +35,8 @@ model Address{
     neighborhood String @db.VarChar(20)
     state String @db.VarChar(2)
     city String @db.VarChar(50)
-    person Person @relation(fields: [person_id],references: [id],onDelete: Cascade)
-    person_id String
+    person Person @relation(fields: [personId],references: [id],onDelete: Cascade)
+    personId String
     @@map("addresses")
 
 }
