@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "people" ALTER COLUMN "birthDate" SET DATA TYPE VARCHAR(30);
