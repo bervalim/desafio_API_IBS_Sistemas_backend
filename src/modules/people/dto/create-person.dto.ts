@@ -1,5 +1,5 @@
 import { Sex, CivilState } from '@prisma/client';
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 import { Transform } from 'class-transformer';
 import {
   IsBoolean,
