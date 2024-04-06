@@ -1,4 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpCode,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PrismaService } from 'prisma/prisma.service';
@@ -65,31 +70,62 @@ export class PeopleService {
     ) {
       return {
         person: plainToInstance(Person, newPerson),
-        personAge,
+        age: personAge,
         message: 'Parabéns pelo seu aniversário!',
       };
     } else {
       return {
         person: plainToInstance(Person, newPerson),
-        personAge,
+        age: personAge,
         daysUntilNextBirthday,
       };
     }
   }
 
-  findAll() {
-    return `This action returns all people`;
+  async findAll(): Promise<Person[]> {
+    const people = await this.prisma.person.findMany();
+    // Convertendo a consulta ao banco em instâncias da classe Person
+    return plainToInstance(Person, people);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async findOne(id: string): Promise<Person> {
+    const person = await this.prisma.person.findUnique({
+      where: { id: id },
+      include: {
+        addresses: true,
+      },
+    });
+    if (!person) {
+      throw new NotFoundException('Person Not Found!');
+    }
+    return plainToInstance(Person, person);
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+  async update(id: string, updatePersonDto: UpdatePersonDto) {
+    const person = await this.prisma.person.findUnique({
+      where: { id: id },
+    });
+    if (!person) {
+      throw new NotFoundException('Person Not Found!');
+    }
+
+    const updatedPerson = await this.prisma.person.update({
+      where: { id },
+      data: { ...updatePersonDto },
+    });
+
+    delete updatedPerson.password;
+    return updatedPerson;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  @HttpCode(204)
+  async remove(id: string): Promise<void> {
+    const person = await this.prisma.person.findUnique({
+      where: { id: id },
+    });
+    if (!person) {
+      throw new NotFoundException('Person Not Found!');
+    }
+    await this.prisma.person.delete({ where: { id } });
   }
 }
