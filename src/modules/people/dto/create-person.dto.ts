@@ -3,6 +3,7 @@ import { hashSync } from 'bcryptjs';
 import { Transform } from 'class-transformer';
 import {
   IsBoolean,
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -16,7 +17,7 @@ export class CreatePersonDto {
   @IsNotEmpty()
   @MaxLength(80)
   name: string;
-  @IsString()
+  @IsEmail()
   @IsNotEmpty()
   @MaxLength(45)
   email: string;

@@ -101,6 +101,14 @@ export class PeopleService {
     return plainToInstance(Person, person);
   }
 
+  async findByEmail(email: string): Promise<Person | undefined> {
+    const personEmail = await this.prisma.person.findUnique({
+      where: { email: email },
+    });
+
+    return personEmail;
+  }
+
   async update(id: string, updatePersonDto: UpdatePersonDto) {
     const person = await this.prisma.person.findUnique({
       where: { id: id },
