@@ -84,6 +84,7 @@ export class PeopleService {
 
   async findAll(): Promise<Person[]> {
     const people = await this.prisma.person.findMany();
+    console.log('Pessoas encontradas:', people); // Adicione este l
     // Convertendo a consulta ao banco em instâncias da classe Person
     return plainToInstance(Person, people);
   }
