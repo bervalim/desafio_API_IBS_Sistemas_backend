@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  HttpCode,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -74,7 +75,8 @@ export class AddressesService {
       include: { person: true },
     });
     if (!address) throw new NotFoundException('Address Not Found!');
-
+    delete address.person.password;
+    delete address.person.id;
     return address;
   }
 
@@ -85,6 +87,14 @@ export class AddressesService {
 
     if (!address) throw new NotFoundException('Address Not Found!');
 
+    const addressDataEquals = Object.keys(updateAddressDto).every(
+      (key) => updateAddressDto[key] === address[key],
+    );
+
+    if (addressDataEquals) {
+      return address;
+    }
+
     const updatedAddress = await this.prisma.address.update({
       where: { id },
       data: { ...updateAddressDto },
@@ -93,6 +103,7 @@ export class AddressesService {
     return updatedAddress;
   }
 
+  @HttpCode(204)
   async remove(id: string) {
     const address = await this.prisma.address.findUnique({
       where: { id: id },

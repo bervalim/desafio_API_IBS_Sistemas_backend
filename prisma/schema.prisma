@@ -38,7 +38,6 @@ model Address{
     person Person @relation(fields: [personId],references: [id],onDelete: Cascade)
     personId String
     @@map("addresses")
-
 }
 
 enum Sex{
