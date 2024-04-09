@@ -154,7 +154,14 @@ export class PeopleService {
 
     const updatedPerson = await this.prisma.person.update({
       where: { id },
-      data: { ...updatePersonDto },
+      data: {
+        name: updatePersonDto.name,
+        email: updatePersonDto.email,
+        password: updatePersonDto.password,
+        sex: updatePersonDto.sex,
+        birthDate: updatePersonDto.birthDate,
+        civilState: updatePersonDto.civilState,
+      },
     });
 
     delete updatedPerson.password;
