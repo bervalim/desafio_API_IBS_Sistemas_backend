@@ -28,7 +28,8 @@ export class PeopleController {
   @UseGuards(AdminGuard, JwtAuthGuard)
   findAll(@Request() req) {
     console.log('-------', req.user, '------');
-    return this.peopleService.findAll();
+    const { page, limit } = req.query;
+    return this.peopleService.findAll(page, limit);
   }
 
   @Get(':id')

@@ -82,11 +82,33 @@ export class PeopleService {
     }
   }
 
-  async findAll(): Promise<Person[]> {
-    const people = await this.prisma.person.findMany();
-    console.log('Pessoas encontradas:', people); // Adicione este l
-    // Convertendo a consulta ao banco em instâncias da classe Person
-    return plainToInstance(Person, people);
+  async findAll(
+    page = 1,
+    limit = 5,
+  ): Promise<{
+    data: Person[];
+    count: number;
+    next?: string;
+    previous?: string;
+  }> {
+    const totalCount = await this.prisma.person.count();
+    const skip = (parseInt(page.toString()) - 1) * parseInt(limit.toString());
+    const take = parseInt(limit.toString());
+
+    const people = await this.prisma.person.findMany({ skip, take });
+    const nextPage =
+      skip + take < totalCount
+        ? `http://localhost:3000/people/?page=${page + 1}`
+        : null;
+    const previousPage =
+      page > 1 ? `http://localhost:3000/people/?page=${page - 1}` : null;
+
+    return {
+      count: totalCount,
+      next: nextPage,
+      previous: previousPage,
+      data: plainToInstance(Person, people),
+    };
   }
 
   async findOne(id: string): Promise<Person> {
