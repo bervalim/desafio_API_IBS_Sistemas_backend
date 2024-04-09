@@ -85,17 +85,29 @@ export class PeopleService {
   async findAll(
     page = 1,
     limit = 5,
+    query?: any,
   ): Promise<{
     data: Person[];
     count: number;
     next?: string;
     previous?: string;
   }> {
+    const where: any = {};
     const totalCount = await this.prisma.person.count();
     const skip = (parseInt(page.toString()) - 1) * parseInt(limit.toString());
     const take = parseInt(limit.toString());
 
-    const people = await this.prisma.person.findMany({ skip, take });
+    // Aplicando os filtros do req.query:
+    if (query) {
+      if (query.civilState) {
+        where.civilState = query.civilState;
+      }
+      if (query.sex) {
+        where.sex = query.sex;
+      }
+    }
+
+    const people = await this.prisma.person.findMany({ where, skip, take });
     const nextPage =
       skip + take < totalCount
         ? `http://localhost:3000/people/?page=${page + 1}`

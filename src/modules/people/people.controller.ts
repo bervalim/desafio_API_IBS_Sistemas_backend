@@ -8,6 +8,7 @@ import {
   Delete,
   Request,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -26,10 +27,10 @@ export class PeopleController {
 
   @UseGuards(AdminGuard, JwtAuthGuard)
   @Get()
-  findAll(@Request() req) {
+  findAll(@Query() query: any, @Request() req) {
     console.log('-------', req.user, '------');
     const { page, limit } = req.query;
-    return this.peopleService.findAll(page, limit);
+    return this.peopleService.findAll(page, limit, query);
   }
 
   @UseGuards(JwtAuthGuard)
