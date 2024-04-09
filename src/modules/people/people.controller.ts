@@ -24,28 +24,28 @@ export class PeopleController {
     return this.peopleService.create(createPersonDto);
   }
 
-  @Get()
   @UseGuards(AdminGuard, JwtAuthGuard)
+  @Get()
   findAll(@Request() req) {
     console.log('-------', req.user, '------');
     const { page, limit } = req.query;
     return this.peopleService.findAll(page, limit);
   }
 
-  @Get(':id')
   @UseGuards(JwtAuthGuard)
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.peopleService.findOne(id);
   }
 
-  @Patch(':id')
   @UseGuards(JwtAuthGuard)
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
     return this.peopleService.update(id, updatePersonDto);
   }
 
-  @Delete(':id')
   @UseGuards(JwtAuthGuard)
+  @Delete(':id')
   remove(@Param('id') id: string) {
     return this.peopleService.remove(id);
   }

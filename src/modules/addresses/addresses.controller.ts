@@ -26,8 +26,9 @@ export class AddressesController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.addressesService.findAll();
+  findAll(@Request() req) {
+    const { page, limit } = req.query;
+    return this.addressesService.findAll(page, limit);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -39,9 +39,33 @@ export class AddressesService {
     return newAddress;
   }
 
-  async findAll() {
-    const addresses = await this.prisma.address.findMany();
-    return addresses;
+  async findAll(
+    page = 1,
+    limit = 5,
+  ): Promise<{
+    data: Address[];
+    count: number;
+    next?: string;
+    previous?: string;
+  }> {
+    const totalCount = await this.prisma.address.count();
+    const skip = (parseInt(page.toString()) - 1) * parseInt(limit.toString());
+    const take = parseInt(limit.toString());
+
+    const adresses = await this.prisma.address.findMany({ skip, take });
+    const nextPage =
+      skip + take < totalCount
+        ? `http://localhost:3000/addresses/?page=${page + 1}`
+        : null;
+    const previousPage =
+      page > 1 ? `http://localhost:3000/addresses/?page=${page - 1}` : null;
+
+    return {
+      count: totalCount,
+      next: nextPage,
+      previous: previousPage,
+      data: adresses,
+    };
   }
 
   async findOne(id: string) {
