@@ -21,11 +21,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(
-    'https://desafio-api-ibs-sistemas-backend-1.onrender.com/' || 'api',
-    app,
-    document,
-  );
+  SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
 bootstrap();
