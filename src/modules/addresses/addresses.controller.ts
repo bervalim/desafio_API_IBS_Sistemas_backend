@@ -10,6 +10,7 @@ import {
   UseGuards,
   ForbiddenException,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { AddressesService } from './addresses.service';
 import { CreateAddressDto } from './dto/create-address.dto';
@@ -167,13 +168,13 @@ export class AddressesController {
       },
     },
   })
-  findAll(@Request() req) {
+  findAll(@Query() query: any, @Request() req) {
     const { page, limit } = req.query;
     if (req.user.admin) {
-      return this.addressesService.findAll(page, limit);
+      return this.addressesService.findAll(page, limit, query);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
@@ -239,7 +240,7 @@ export class AddressesController {
       return oneAdress;
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
@@ -315,7 +316,7 @@ export class AddressesController {
       return this.addressesService.update(id, updateAddressDto);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
@@ -361,7 +362,7 @@ export class AddressesController {
       return this.addressesService.remove(id);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }

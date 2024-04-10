@@ -163,7 +163,7 @@ export class PeopleController {
       return this.peopleService.findAll(page, limit, query);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
@@ -242,7 +242,7 @@ export class PeopleController {
       return this.peopleService.findOne(id);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
@@ -312,7 +312,7 @@ export class PeopleController {
       return this.peopleService.update(id, updatePersonDto);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
@@ -357,7 +357,7 @@ export class PeopleController {
       return this.peopleService.remove(id);
     } else {
       throw new ForbiddenException(
-        'Você não tem permissão para acessar esta rota',
+        'You do not have permission to access this route',
       );
     }
   }
