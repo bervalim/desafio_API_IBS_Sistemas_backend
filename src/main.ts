@@ -14,7 +14,9 @@ async function bootstrap() {
   );
   const config = new DocumentBuilder()
     .setTitle('Sign Adress API')
-    .setDescription('This API allows you to sign your adress')
+    .setDescription(
+      'This Api allows you to register, edit, delete and manage all your addresses. It has the following additional features: Calculation of how many days are left until the next birthday and if the birthday coincides with the day of registration, a personalized message will be sent to the user, filtered based on gender and pagination implementation.',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();

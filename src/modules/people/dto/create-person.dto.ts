@@ -50,12 +50,12 @@ export class CreatePersonDto {
   @ApiProperty({
     enum: CivilState,
     description: 'Enum que representa o estado civil',
-  }) // Combine description and enum
+  })
   @IsNotEmpty()
   @IsEnum(CivilState)
   civilState: CivilState;
 
-  @ApiPropertyOptional() // Mark as optional
+  @ApiPropertyOptional()
   @IsBoolean()
   admin: boolean;
 }
