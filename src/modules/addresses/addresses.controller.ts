@@ -104,6 +104,22 @@ export class AddressesController {
     description: 'Maximum number of results per page',
     required: false,
   })
+  @ApiQuery({
+    name: 'zipCode',
+    description: 'address zipCode',
+  })
+  @ApiQuery({
+    name: 'neighborhood',
+    description: 'address neighborhood',
+  })
+  @ApiQuery({
+    name: 'city',
+    description: 'address city',
+  })
+  @ApiQuery({
+    name: 'state',
+    description: 'address state',
+  })
   @ApiResponse({
     status: 200,
     description: 'List of addresses fetched successfully.',
