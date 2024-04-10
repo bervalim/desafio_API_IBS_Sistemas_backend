@@ -28,6 +28,15 @@ export class AuthController {
       },
     },
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid Email/Password',
+    schema: {
+      example: {
+        message: 'Invalid email or password',
+      },
+    },
+  })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
