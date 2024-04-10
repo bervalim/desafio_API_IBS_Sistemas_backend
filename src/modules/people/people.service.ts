@@ -168,7 +168,6 @@ export class PeopleService {
     return updatedPerson;
   }
 
-  @HttpCode(204)
   async remove(id: string): Promise<void> {
     const person = await this.prisma.person.findUnique({
       where: { id: id },

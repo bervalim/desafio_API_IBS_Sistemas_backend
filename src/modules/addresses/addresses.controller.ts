@@ -15,12 +15,15 @@ import { AddressesService } from './addresses.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('addresses')
 @Controller('addresses')
 export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Post()
   async create(@Body() createAddressDto: CreateAddressDto, @Request() req) {
     const createdAddress = await this.addressesService.create(
@@ -31,6 +34,7 @@ export class AddressesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get()
   findAll(@Request() req) {
     const { page, limit } = req.query;
@@ -44,6 +48,7 @@ export class AddressesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
   async findOne(@Param('id') id: string, @Request() req) {
     const oneAdress = await this.addressesService.findOne(id);
@@ -57,6 +62,7 @@ export class AddressesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -75,6 +81,7 @@ export class AddressesController {
 
   @HttpCode(204)
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   async remove(@Param('id') id: string, @Request() req) {
     const oneAdress = await this.addressesService.findOne(id);

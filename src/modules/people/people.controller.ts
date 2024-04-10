@@ -9,14 +9,16 @@ import {
   Request,
   UseGuards,
   Query,
-  UnauthorizedException,
   ForbiddenException,
+  HttpCode,
 } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('people')
 @Controller('people')
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
@@ -28,8 +30,8 @@ export class PeopleController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
+  @ApiBearerAuth()
   findAll(@Query() query: any, @Request() req) {
-    console.log('-------', req.user, '------');
     const { page, limit } = req.query;
     if (req.user.admin == true) {
       return this.peopleService.findAll(page, limit, query);
@@ -42,6 +44,7 @@ export class PeopleController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
+  @ApiBearerAuth()
   findOne(@Param('id') id: string, @Request() req) {
     if (req.user.admin == true || id == req.user.id) {
       return this.peopleService.findOne(id);
@@ -54,6 +57,7 @@ export class PeopleController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
+  @ApiBearerAuth()
   update(
     @Param('id') id: string,
     @Body() updatePersonDto: UpdatePersonDto,
@@ -68,8 +72,10 @@ export class PeopleController {
     }
   }
 
+  @HttpCode(204)
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
+  @ApiBearerAuth()
   remove(@Param('id') id: string, @Request() req) {
     if (req.user.admin == true || id == req.user.id) {
       return this.peopleService.remove(id);
