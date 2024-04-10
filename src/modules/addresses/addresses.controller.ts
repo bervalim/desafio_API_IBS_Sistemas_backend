@@ -15,7 +15,13 @@ import { AddressesService } from './addresses.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('addresses')
 @Controller('addresses')
@@ -56,6 +62,30 @@ export class AddressesController {
       },
     },
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request. Check error message for details.',
+    schema: {
+      example: {
+        message: [
+          'zipCode must be shorter than or equal to 8 characters',
+          'zipCode should not be empty',
+          'zipCode must be a string',
+        ],
+        error: 'Bad Request',
+        statusCode: 400,
+      },
+    },
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Absence of token',
+    schema: {
+      example: {
+        message: 'Unauthorized',
+      },
+    },
+  })
   async create(@Body() createAddressDto: CreateAddressDto, @Request() req) {
     const createdAddress = await this.addressesService.create(
       createAddressDto,
@@ -67,6 +97,12 @@ export class AddressesController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Get()
+  @ApiQuery({ name: 'page', description: 'Page Number', required: false })
+  @ApiQuery({
+    name: 'limit',
+    description: 'Maximum number of results per page',
+    required: false,
+  })
   @ApiResponse({
     status: 200,
     description: 'List of addresses fetched successfully.',
@@ -113,6 +149,24 @@ export class AddressesController {
       },
     },
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Absence of token',
+    schema: {
+      example: {
+        message: 'Unauthorized',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'non-admin user',
+    schema: {
+      example: {
+        message: 'You do not have permission to access this route',
+      },
+    },
+  })
   findAll(@Request() req) {
     const { page, limit } = req.query;
     if (req.user.admin) {
@@ -149,6 +203,33 @@ export class AddressesController {
           civilState: 'Married',
           admin: true,
         },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Absence of token',
+    schema: {
+      example: {
+        message: 'Unauthorized',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'non-admin user or does not own the account',
+    schema: {
+      example: {
+        message: 'You do not have permission to access this route',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Address Not Found!',
+    schema: {
+      example: {
+        message: 'Address Not Found!',
       },
     },
   })
@@ -197,6 +278,33 @@ export class AddressesController {
       },
     },
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Absence of token',
+    schema: {
+      example: {
+        message: 'Unauthorized',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'non-admin user or does not own the account',
+    schema: {
+      example: {
+        message: 'You do not have permission to access this route',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Address Not Found!',
+    schema: {
+      example: {
+        message: 'Address Not Found!',
+      },
+    },
+  })
   async update(
     @Param('id') id: string,
     @Body() updateAddressDto: UpdateAddressDto,
@@ -216,6 +324,33 @@ export class AddressesController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
+  @ApiResponse({
+    status: 401,
+    description: 'Absence of token',
+    schema: {
+      example: {
+        message: 'Unauthorized',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'non-admin user or does not own the account',
+    schema: {
+      example: {
+        message: 'You do not have permission to access this route',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Address Not Found!',
+    schema: {
+      example: {
+        message: 'Address Not Found!',
+      },
+    },
+  })
   @ApiResponse({
     status: 204,
     description: 'Address deleted successfully.',

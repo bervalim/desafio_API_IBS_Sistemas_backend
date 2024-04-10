@@ -81,7 +81,7 @@ export class PeopleController {
     description: 'Email Conflict',
     schema: {
       example: {
-        message: 'Email already exists',
+        message: 'You do not have permission to access this route',
       },
     },
   })
