@@ -29,6 +29,11 @@ export class AuthService {
         { email: person.email, admin: person.admin },
         { subject: person.id, secret: process.env.SECRET_KEY },
       ),
+      person: {
+        name: person.name,
+        email: person.email,
+        id: person.id,
+      },
     };
   }
 }
