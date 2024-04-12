@@ -3,6 +3,7 @@ import { LoginDto } from './dto/login.dto';
 import { PeopleService } from '../people/people.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
+import { CivilState } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -30,6 +31,9 @@ export class AuthService {
         { subject: person.id, secret: process.env.SECRET_KEY },
       ),
       person: {
+        civilState: person.civilState,
+        birthDate: person.birthDate,
+        sex: person.sex,
         name: person.name,
         email: person.email,
         id: person.id,
