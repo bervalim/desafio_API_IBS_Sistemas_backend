@@ -56,6 +56,7 @@ export class CreatePersonDto {
   civilState: CivilState;
 
   @ApiPropertyOptional()
+  @IsOptional()
   @IsBoolean()
   admin: boolean;
 }
