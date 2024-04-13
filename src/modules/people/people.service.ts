@@ -71,6 +71,7 @@ export class PeopleService {
       return {
         person: plainToInstance(Person, newPerson),
         age: personAge,
+        daysUntilNextBirthday,
         message: 'Parabéns pelo seu aniversário!',
       };
     } else {
@@ -78,6 +79,7 @@ export class PeopleService {
         person: plainToInstance(Person, newPerson),
         age: personAge,
         daysUntilNextBirthday,
+        message: 'Cadastro realizado com sucesso!',
       };
     }
   }
