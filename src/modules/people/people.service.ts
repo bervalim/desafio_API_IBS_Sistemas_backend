@@ -63,7 +63,7 @@ export class PeopleService {
     );
 
     await this.prisma.person.create({
-      data: { ...newPerson },
+      data: { ...newPerson, addresses: undefined },
     });
 
     // Verifica se é o aniversário hoje
@@ -146,7 +146,7 @@ export class PeopleService {
       where: { email: email },
     });
 
-    return personEmail;
+    return { ...personEmail, addresses: null };
   }
 
   async update(id: string, updatePersonDto: UpdatePersonDto) {

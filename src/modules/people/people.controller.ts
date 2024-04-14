@@ -319,7 +319,7 @@ export class PeopleController {
   async findPersonAddresses(@Param('id') id: string, @Request() req) {
     if (req.user.admin == true || id == req.user.id) {
       const person = await this.peopleService.findOne(id);
-      return person;
+      return person.addresses;
     } else {
       throw new ForbiddenException(
         'You do not have permission to access this route',
