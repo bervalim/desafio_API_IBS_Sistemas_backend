@@ -248,6 +248,86 @@ export class PeopleController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get(':id/addresses')
+  @ApiResponse({
+    status: 200,
+    description: 'Person details fetched successfully.',
+    schema: {
+      example: {
+        id: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
+        name: 'Pantaleãot',
+        email: 'bernardogvalim@eemadil.com',
+        sex: 'Male',
+        birthDate: '16/05/1998',
+        civilState: 'Married',
+        admin: true,
+        addresses: [
+          {
+            id: '5154c6db-35ed-4868-bb2a-88265e835103',
+            zipCode: '80730330',
+            address: 'Rua Coronel Xdd',
+            number: 864,
+            complement: 'Apto 701',
+            neighborhood: 'Bigorrilho',
+            state: 'PR',
+            city: 'Curitiba',
+            personId: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
+          },
+          {
+            id: 'c5283d3c-9a55-419b-90f7-757f58e7a251',
+            zipCode: '80730330',
+            address: 'Rua Corfonel Xdd',
+            number: 864,
+            complement: 'Apto 701',
+            neighborhood: 'Bigorrilho',
+            state: 'PR',
+            city: 'Curitiba',
+            personId: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
+          },
+        ],
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Person Not Found!',
+    schema: {
+      example: {
+        message: 'Person Not Found!',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Absence of token',
+    schema: {
+      example: {
+        message: 'Unauthorized',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'non-admin user or does not own the account',
+    schema: {
+      example: {
+        message: 'You do not have permission to access this route',
+      },
+    },
+  })
+  @ApiBearerAuth()
+  async findPersonAddresses(@Param('id') id: string, @Request() req) {
+    if (req.user.admin == true || id == req.user.id) {
+      const person = await this.peopleService.findOne(id);
+      return person;
+    } else {
+      throw new ForbiddenException(
+        'You do not have permission to access this route',
+      );
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @ApiBody({
     description: 'Update person details.',

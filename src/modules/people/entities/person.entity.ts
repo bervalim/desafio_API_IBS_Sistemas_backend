@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { randomUUID } from 'crypto';
-import { Sex, CivilState } from '@prisma/client';
+import { Sex, CivilState, Address } from '@prisma/client';
 
 export class Person {
   readonly id: string;

@@ -9,6 +9,7 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { Person } from './entities/person.entity';
 import { plainToInstance } from 'class-transformer';
+import { Address } from '../addresses/entities/address.entity';
 
 @Injectable()
 export class PeopleService {
@@ -61,7 +62,9 @@ export class PeopleService {
       (nextBirthday.getTime() - currentDay.getTime()) / (1000 * 3600 * 24),
     );
 
-    await this.prisma.person.create({ data: { ...newPerson } });
+    await this.prisma.person.create({
+      data: { ...newPerson },
+    });
 
     // Verifica se é o aniversário hoje
     if (
