@@ -251,41 +251,32 @@ export class PeopleController {
   @Get(':id/addresses')
   @ApiResponse({
     status: 200,
-    description: 'Person details fetched successfully.',
+    description: 'Person Addresses details fetched successfully.',
     schema: {
-      example: {
-        id: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
-        name: 'Pantaleãot',
-        email: 'bernardogvalim@eemadil.com',
-        sex: 'Male',
-        birthDate: '16/05/1998',
-        civilState: 'Married',
-        admin: true,
-        addresses: [
-          {
-            id: '5154c6db-35ed-4868-bb2a-88265e835103',
-            zipCode: '80730330',
-            address: 'Rua Coronel Xdd',
-            number: 864,
-            complement: 'Apto 701',
-            neighborhood: 'Bigorrilho',
-            state: 'PR',
-            city: 'Curitiba',
-            personId: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
-          },
-          {
-            id: 'c5283d3c-9a55-419b-90f7-757f58e7a251',
-            zipCode: '80730330',
-            address: 'Rua Corfonel Xdd',
-            number: 864,
-            complement: 'Apto 701',
-            neighborhood: 'Bigorrilho',
-            state: 'PR',
-            city: 'Curitiba',
-            personId: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
-          },
-        ],
-      },
+      example: [
+        {
+          id: '5154c6db-35ed-4868-bb2a-88265e835103',
+          zipCode: '80730330',
+          address: 'Rua Coronel Xdd',
+          number: 864,
+          complement: 'Apto 701',
+          neighborhood: 'Bigorrilho',
+          state: 'PR',
+          city: 'Curitiba',
+          personId: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
+        },
+        {
+          id: 'c5283d3c-9a55-419b-90f7-757f58e7a251',
+          zipCode: '80730330',
+          address: 'Rua Corfonel Xdd',
+          number: 864,
+          complement: 'Apto 701',
+          neighborhood: 'Bigorrilho',
+          state: 'PR',
+          city: 'Curitiba',
+          personId: '89ffa6ee-644d-4c70-9bd8-78256ee06c8f',
+        },
+      ],
     },
   })
   @ApiResponse({
