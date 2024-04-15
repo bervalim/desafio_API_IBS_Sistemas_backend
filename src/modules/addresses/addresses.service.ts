@@ -14,14 +14,6 @@ export class AddressesService {
   constructor(private prisma: PrismaService) {}
 
   async create(createAddressDto: CreateAddressDto, personId: string) {
-    const findAdress = await this.prisma.address.findUnique({
-      where: { address: createAddressDto.address },
-    });
-
-    if (findAdress) {
-      throw new ConflictException('Address already exists');
-    }
-
     const address = Object.assign(new Address(), createAddressDto);
 
     const newAddress = await this.prisma.address.create({

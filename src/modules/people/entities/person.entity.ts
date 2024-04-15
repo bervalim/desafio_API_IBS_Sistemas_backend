@@ -13,7 +13,7 @@ export class Person {
   birthDate: string;
   civilState: CivilState;
   admin: boolean;
-  addresses: Address[] | undefined;
+  addresses?: Address[];
 
   constructor() {
     this.id = randomUUID();
