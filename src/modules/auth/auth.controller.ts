@@ -24,7 +24,15 @@ export class AuthController {
     schema: {
       example: {
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcnNvbjJAZW1haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTcxMjcwNTc5Mywic3ViIjoiZWUyNzhmZWEtM2Q4Yy00NzcwLWJiZGQtYWViNmUxMzIzNWY4In0.nAiDsKe4LNYuKkEaWyrBZoGbSECXLRc_M7QFZd1Q9bY',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcnNvbmY0ZmZmQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE3MTMxOTg4NTQsInN1YiI6Ijg0ZTBmYmViLTFjMDktNDA1Yi05M2I2LWU1YzAzYzMwMTNkYiJ9.mglyChq-wmjYkKXiRr2i2m9aGu04IlY5wNoxBF2V4kc',
+        person: {
+          civilState: 'Married',
+          birthDate: '16/05/1998',
+          sex: 'Male',
+          name: 'person',
+          email: 'personf4fff@email.com',
+          id: '84e0fbeb-1c09-405b-93b6-e5c03c3013db',
+        },
       },
     },
   })

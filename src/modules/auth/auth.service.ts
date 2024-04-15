@@ -3,7 +3,6 @@ import { LoginDto } from './dto/login.dto';
 import { PeopleService } from '../people/people.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import { CivilState } from '@prisma/client';
 
 @Injectable()
 export class AuthService {

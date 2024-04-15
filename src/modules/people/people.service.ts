@@ -9,7 +9,6 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { Person } from './entities/person.entity';
 import { plainToInstance } from 'class-transformer';
-import { Address } from '../addresses/entities/address.entity';
 
 @Injectable()
 export class PeopleService {
@@ -26,14 +25,11 @@ export class PeopleService {
 
     const newPerson = Object.assign(new Person(), createPersonDto);
 
-    // Extrai o dia, mês e ano do formato "dd/mm/yyyy"
     const [day, month, year] = createPersonDto.birthDate.split('/').map(Number);
 
-    // Cria um novo objeto Date com o formato correto
     const birthDate = new Date(year, month - 1, day);
     const currentDay = new Date();
 
-    // Calcula a idade corretamente
     let personAge = currentDay.getFullYear() - birthDate.getFullYear();
     if (
       currentDay.getMonth() < birthDate.getMonth() ||
@@ -43,7 +39,6 @@ export class PeopleService {
       personAge--;
     }
 
-    // Cria uma nova data para o próximo aniversário
     const nextBirthday = new Date(
       currentDay.getFullYear(),
       birthDate.getMonth(),
@@ -57,7 +52,6 @@ export class PeopleService {
       nextBirthday.setFullYear(currentDay.getFullYear() + 1);
     }
 
-    // Calcula os dias até o próximo aniversário
     const daysUntilNextBirthday = Math.ceil(
       (nextBirthday.getTime() - currentDay.getTime()) / (1000 * 3600 * 24),
     );
@@ -66,7 +60,6 @@ export class PeopleService {
       data: { ...newPerson, addresses: undefined },
     });
 
-    // Verifica se é o aniversário hoje
     if (
       currentDay.getMonth() === birthDate.getMonth() &&
       currentDay.getDate() === birthDate.getDate()
@@ -102,7 +95,6 @@ export class PeopleService {
     const skip = (parseInt(page.toString()) - 1) * parseInt(limit.toString());
     const take = parseInt(limit.toString());
 
-    // Aplicando os filtros do req.query:
     if (query) {
       if (query.civilState) {
         where.civilState = query.civilState;
