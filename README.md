@@ -22,7 +22,7 @@
 | GET    | /address       | Lista todos os endereços das pessoas            | Apenas administradores                   |
 | GET    | /address /{id} | Listar os endereços que pertencem a uma pessoa  | Admin e  donos da conta            |
 | DELETE | /address /{id} | Deletar o endereço que pertence a uma pessoa    | Admin e  donos da conta            |
-| PATCH  | /address/{id} | Atualizar o endreço que pertence a um cliente |   Admin e  donos da conta            |
+| PATCH  | /address/{id} | Atualizar o endreço que pertence a uma pessoa |   Admin e  donos da conta            |
 
 ## Diagrama de Entidades e Relacionamentos:
 
@@ -44,7 +44,7 @@
 <li>Clone o repositório de forma local</li>
 <li>Utilize o comando npm install para instalar todas as dependências</li>
 <li>Utilize o comando npx prisma migrate para rodar as migrações </li>
-<li>npm run build</li>
+<li>Utilize o npm run build</li>
 <li>Para rodar o servidor, utilize o npm run start:dev</li>
 <li>Para um melhor entendimento a respeito da API e de cada rota, acesse a documentação em https://desafio-api-ibs-sistemas-backend-1.onrender.com/api#/.
 <li>Link do deploy: https://desafio-api-ibs-sistemas-backend-1.onrender.com//</li>
