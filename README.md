@@ -4,7 +4,7 @@
 
 <h3>Descrição da aplicação:</h3>
 
-<p>Esta API REST é responsável por cadastrar pessoas que podem ter muitos endereços associados. Nesta API, utilizei o PRISMA como ORM para fazer a interação com o banco de dados, s utilização de postgresql como banco de dados, json web token para gerar tokens criptografados, dotenv para proporcionar a segurança dos dados sensíveis,bcrypt js para executar o hash da senha  e nest.js com framework.
+<p>Esta API REST é responsável por cadastrar pessoas que podem ter muitos endereços associados. Nesta API, utilizei o PRISMA como ORM para fazer a interação com o banco de dados, utilização de postgresql como banco de dados, json web token para gerar tokens criptografados, dotenv para proporcionar a segurança dos dados sensíveis,bcrypt.js para executar o hash da senha  e nest.js como framework.
 </p>
 
 <h2>Endpoints da API:</h2>
