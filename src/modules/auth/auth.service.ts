@@ -3,16 +3,20 @@ import { LoginDto } from './dto/login.dto';
 import { PeopleService } from '../people/people.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private peopleService: PeopleService,
     private readonly jwtService: JwtService,
+    private prisma: PrismaService,
   ) {}
 
   async login(loginDto: LoginDto) {
-    const person = await this.peopleService.findByEmail(loginDto.email);
+    const person = await this.prisma.person.findUnique({
+      where: { email: loginDto.email },
+    });
 
     if (!person) {
       throw new UnauthorizedException('Invalid email or password');
