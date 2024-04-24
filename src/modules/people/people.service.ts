@@ -92,7 +92,9 @@ export class PeopleService {
   }> {
     const where: any = {};
     const totalCount = await this.prisma.person.count();
+    // OFFSET
     const skip = (parseInt(page.toString()) - 1) * parseInt(limit.toString());
+    // LIMIT
     const take = parseInt(limit.toString());
 
     if (query) {
@@ -107,11 +109,12 @@ export class PeopleService {
     const people = await this.prisma.person.findMany({ where, skip, take });
     const nextPage =
       skip + take < totalCount
-        ? `http://localhost:3000/people/?page=${page + 1}`
+        ? `http://localhost:3000/people/?page=${parseInt(page.toString()) + 1}`
         : null;
     const previousPage =
-      page > 1 ? `http://localhost:3000/people/?page=${page - 1}` : null;
-
+      page > 1
+        ? `http://localhost:3000/people/?page=${parseInt(page.toString()) - 1}`
+        : null;
     return {
       count: totalCount,
       next: nextPage,
