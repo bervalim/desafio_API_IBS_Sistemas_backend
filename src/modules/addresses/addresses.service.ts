@@ -71,10 +71,12 @@ export class AddressesService {
     });
     const nextPage =
       skip + take < totalCount
-        ? `http://localhost:3000/addresses/?page=${page + 1}`
+        ? `http://localhost:3000/addresses/?page=${parseInt(page.toString()) + 1}`
         : null;
     const previousPage =
-      page > 1 ? `http://localhost:3000/addresses/?page=${page - 1}` : null;
+      page > 1
+        ? `http://localhost:3000/addresses/?page=${parseInt(page.toString()) - 1}`
+        : null;
 
     return {
       count: totalCount,

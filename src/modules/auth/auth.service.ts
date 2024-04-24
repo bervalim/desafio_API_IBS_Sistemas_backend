@@ -1,6 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { PeopleService } from '../people/people.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,7 +7,6 @@ import { PrismaService } from 'prisma/prisma.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private peopleService: PeopleService,
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
   ) {}
